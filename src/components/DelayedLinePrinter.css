@@ -1,0 +1,16 @@
+.fadeIn {
+  animation: 1s ease 0s normal forwards 1 fadeIn;
+  transition: none;
+  visibility: hidden;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    visibility: visible;
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}

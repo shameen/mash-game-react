@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { MashCategory } from "../types/MashCategory";
 import getRandomMashCategories from "../utils/getRandomMashCategories";
+import DelayedLinePrinter from "./DelayedLinePrinter";
+import { removeElementAtIndex } from "../utils/removeElementAtIndex";
 
 interface MashGameProps {
   numGroups: number;
   numItemsPerGroup: number;
-}
-
-function removeElementAtIndex<T>(arr: T[], index: number): T[] {
-  return arr.slice(0, index).concat(arr.slice(index + 1));
 }
 
 const MashGame: React.FC<MashGameProps> = ({ numGroups, numItemsPerGroup }) => {
@@ -30,7 +28,13 @@ const MashGame: React.FC<MashGameProps> = ({ numGroups, numItemsPerGroup }) => {
   };
 
   const [groups, setGroups] = useState<MashCategory[]>(initialStateGroups());
-  const [result, setResult] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  /** The items that were removed/strikethrough-ed */
+  const [resultDeleted, setResultDeleted] = useState<string[]>([]);
+  /** A waiting area where the result is, until after the Deleted animation is done */
+  const [resultPending, setResultPending] = useState<string>("");
+  /** The result displayed on screen */
+  const [resultFinal, setResultFinal] = useState<string>("");
 
   /** When typing into each MASH Section, update our state accordingly */
   const handleTextChange = (
@@ -48,7 +52,17 @@ const MashGame: React.FC<MashGameProps> = ({ numGroups, numItemsPerGroup }) => {
     setGroups(categories);
   };
 
-  const DoTheMash = () => {
+  const PendingResultToFinalResult = () => {
+    setResultFinal(resultPending);
+    setResultPending("");
+  };
+
+  const DoTheMash = async () => {
+    setResultPending("");
+    setResultFinal("");
+    setResultDeleted([]);
+    setIsLoading(true);
+
     //Prepare group data as a single flat array ("MASH" isn't actually on-screen so it's added hard-coded here)
     const mashValues = [
       "You live in a Mansion",
@@ -79,6 +93,7 @@ const MashGame: React.FC<MashGameProps> = ({ numGroups, numItemsPerGroup }) => {
     //Main loop
     const targetValueCount = groups.length + 1;
     let values = allValues;
+    const deleted = [];
     for (let i = 0; i < allValues.length ** 2; i += magicNumber) {
       //The remaining values are in "values", so adding magic number is the first candidate for removal
       if (values.length === targetValueCount) {
@@ -88,8 +103,10 @@ const MashGame: React.FC<MashGameProps> = ({ numGroups, numItemsPerGroup }) => {
 
       //If the current "candidate" is the only one left in its category, try the next one (keep trying until we find a good one)
       while (true) {
-        const candidate = removeElementAtIndex(values, i % values.length);
+        const indexToDelete = i % values.length;
+        const candidate = removeElementAtIndex(values, indexToDelete);
         if (_resultHasAtLeastOneFromEachGroup(candidate)) {
+          deleted.push(values[indexToDelete]);
           values = candidate;
           break;
         } else {
@@ -105,7 +122,9 @@ const MashGame: React.FC<MashGameProps> = ({ numGroups, numItemsPerGroup }) => {
     }
 
     const result = [`Your magic number is ${magicNumber}`, ...values];
-    setResult(result.join("\n"));
+    setResultDeleted(deleted);
+    setResultPending(result.join("\n"));
+    setTimeout(() => setIsLoading(false), 200);
   };
 
   return (
@@ -154,20 +173,34 @@ const MashGame: React.FC<MashGameProps> = ({ numGroups, numItemsPerGroup }) => {
         </button>
       </section>
 
-      {result ? (
+      {isLoading ? (
+        <>loading...</>
+      ) : resultPending ? (
         <section id="mash-results" className="m-3 p-3 border-t">
+          <div className="line-through">
+            <DelayedLinePrinter
+              strings={resultDeleted}
+              callback={PendingResultToFinalResult}
+            />
+          </div>
+        </section>
+      ) : resultFinal ? (
+        <>
+          <div className="line-through">
+            <DelayedLinePrinter strings={resultDeleted} delay={0} />
+          </div>
           <p className="whitespace-pre bg-white shadow-lg rounded-lg p-4 text-black">
-            {result}
+            {resultFinal}
           </p>
           <div className="m-6">
             <button
-              onClick={(_) => setResult("")}
+              onClick={(_) => setResultFinal("")}
               className="cursor-pointer ml-2 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded shadow active:translate-y-px"
             >
               Reset
             </button>
           </div>
-        </section>
+        </>
       ) : null}
     </main>
   );
