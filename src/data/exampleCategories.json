@@ -1,0 +1,42 @@
+[
+  {
+    "header": "Spouse",
+    "items": ["Liam", "Olivia", "Noah", "Emma", "William", "Ava"]
+  },
+  {
+    "header": "Career",
+    "items": ["Doctor", "Teacher", "Athlete", "Actor", "Unemployed", "Criminal"]
+  },
+  {
+    "header": "Location",
+    "items": [
+      "Enchanted forest",
+      "Tropical island",
+      "Quiet village",
+      "Haunted street",
+      "Arctic tundra",
+      "Busy, noisy city",
+      "Posh street",
+      "Desolate wasteland"
+    ]
+  },
+  {
+    "header": "Number of Children",
+    "items": ["0", "1", "2", "3", "4", "5+"]
+  },
+  {
+    "header": "Car",
+    "items": [
+      "Tesla",
+      "BMW",
+      "Monster Car",
+      "Motorbike",
+      "Ice Cream Truck",
+      "Broken old car"
+    ]
+  },
+  {
+    "header": "Pet",
+    "items": ["Dog", "Cat", "Fish", "Snake", "Parrot", "No pets"]
+  }
+]

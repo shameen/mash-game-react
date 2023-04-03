@@ -7,3 +7,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - `yarn start` Run the app in the dev mode. ([http://localhost:3000](http://localhost:3000))
 - `yarn test` Run test runner in interactive watch mode ([?](https://facebook.github.io/create-react-app/docs/running-tests))
 - `yarn build` Builds the app for production to the `build` folder.
+- `yarn deploy` Deploy to GitHub Pages (via the `gh-pages` branch)

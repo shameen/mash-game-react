@@ -1,9 +1,8 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
-import App from "./App";
+import MashGame from "./MashGame";
 
-test("renders learn react link", () => {
-  render(<App />);
+test("renders MASH title", () => {
+  render(<MashGame numGroups={4} numItemsPerGroup={4} />);
   const linkElement = screen.getByText(/MASH/i);
   expect(linkElement).toBeInTheDocument();
 });

@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import MashGame from "./components/MashGame";
 
 function App() {
   const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 500);
+  }, []);
+
   return (
-    <main className="h-screen p-8 bg-purple-700">
-      <header className="text-white text-center mb-10">
-        <h1 className="text-4xl">MASH</h1>
-      </header>
+    <main className="min-h-screen p-8 bg-purple-700">
       {loading ? (
         <p className="text-center">
-          <i className="inline-block animate-bounce">⏳</i>
+          <span className="inline-block animate-bounce">⏳</span>
         </p>
-      ) : null}
+      ) : (
+        <MashGame numGroups={4} numItemsPerGroup={4} />
+      )}
     </main>
   );
 }
