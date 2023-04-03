@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/mash-game-react/static/css/main.af351d76.css",
-    "main.js": "/mash-game-react/static/js/main.1670bb68.js",
+    "main.css": "/mash-game-react/static/css/main.b946c0c3.css",
+    "main.js": "/mash-game-react/static/js/main.2adb77b0.js",
     "index.html": "/mash-game-react/index.html",
-    "main.af351d76.css.map": "/mash-game-react/static/css/main.af351d76.css.map",
-    "main.1670bb68.js.map": "/mash-game-react/static/js/main.1670bb68.js.map"
+    "main.b946c0c3.css.map": "/mash-game-react/static/css/main.b946c0c3.css.map",
+    "main.2adb77b0.js.map": "/mash-game-react/static/js/main.2adb77b0.js.map"
   },
   "entrypoints": [
-    "static/css/main.af351d76.css",
-    "static/js/main.1670bb68.js"
+    "static/css/main.b946c0c3.css",
+    "static/js/main.2adb77b0.js"
   ]
 }
