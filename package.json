@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "repository": "github:shameen/mash-game-react",
+  "homepage": "https://shameen.github.io/mash-game-react/",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
